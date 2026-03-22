@@ -413,8 +413,8 @@ local BackFrame = Instance.new("Frame")
 BackFrame.Size = UDim2.new(0, 1180, 0, 820)
 BackFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 BackFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-BackFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 55)
-BackFrame.BackgroundTransparency = 0.5
+BackFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+BackFrame.BackgroundTransparency = 0.2
 BackFrame.BorderSizePixel = 0
 BackFrame.Parent = ScreenGui
 
@@ -425,7 +425,8 @@ BackFrameCorner.Parent = BackFrame
 -- Top bar with title
 local TopBar = Instance.new("Frame")
 TopBar.Size = UDim2.new(1, 0, 0, 60)
-TopBar.BackgroundColor3 = Color3.fromRGB(35, 40, 45)
+TopBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TopBar.BackgroundTransparency = 0.2
 TopBar.BorderSizePixel = 0
 TopBar.Parent = BackFrame
 
@@ -437,7 +438,8 @@ TopBarCorner.Parent = TopBar
 local TopBarExtend = Instance.new("Frame")
 TopBarExtend.Size = UDim2.new(1, 0, 0, 10)
 TopBarExtend.Position = UDim2.new(0, 0, 1, -10)
-TopBarExtend.BackgroundColor3 = Color3.fromRGB(35, 40, 45)
+TopBarExtend.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TopBarExtend.BackgroundTransparency = 0.2
 TopBarExtend.BorderSizePixel = 0
 TopBarExtend.Parent = TopBar
 
@@ -459,13 +461,13 @@ local SearchBar = Instance.new("TextBox")
 SearchBar.Size = UDim2.new(0, 200, 0, 35)
 SearchBar.Position = UDim2.new(1, -350, 0.5, 0)
 SearchBar.AnchorPoint = Vector2.new(0, 0.5)
-SearchBar.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+SearchBar.BackgroundColor3 = Color3.fromRGB(20, 20, 22)
 SearchBar.BorderSizePixel = 0
 SearchBar.Font = Enum.Font.Gotham
 SearchBar.TextSize = 16
 SearchBar.TextColor3 = Color3.new(1, 1, 1)
 SearchBar.PlaceholderText = "Search"
-SearchBar.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+SearchBar.PlaceholderColor3 = Color3.fromRGB(80, 80, 80)
 SearchBar.Text = ""
 SearchBar.ClearTextOnFocus = false
 SearchBar.Parent = TopBar
@@ -484,7 +486,7 @@ local SortButton = Instance.new("TextButton")
 SortButton.Size = UDim2.new(0, 80, 0, 35)
 SortButton.Position = UDim2.new(1, -230, 0.5, 0)
 SortButton.AnchorPoint = Vector2.new(0, 0.5)
-SortButton.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+SortButton.BackgroundColor3 = Color3.fromRGB(20, 20, 22)
 SortButton.BorderSizePixel = 0
 SortButton.Font = Enum.Font.GothamBold
 SortButton.TextSize = 16
@@ -522,7 +524,7 @@ Frame.AutomaticCanvasSize = Enum.AutomaticSize.Y
 Frame.ScrollingDirection = Enum.ScrollingDirection.Y
 Frame.BackgroundTransparency = 1
 Frame.ScrollBarThickness = 6
-Frame.ScrollBarImageColor3 = Color3.fromRGB(100, 105, 110)
+Frame.ScrollBarImageColor3 = Color3.fromRGB(40, 40, 45)
 Frame.BorderSizePixel = 0
 Frame.Parent = BackFrame
 
@@ -540,7 +542,7 @@ SortFrame.Size = UDim2.new(0, 200, 0, 0)
 SortFrame.Position = UDim2.new(1, -230, 1, 5)
 SortFrame.AnchorPoint = Vector2.new(0, 0)
 SortFrame.AutomaticSize = Enum.AutomaticSize.Y
-SortFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 55)
+SortFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 12)
 SortFrame.BorderSizePixel = 0
 SortFrame.ZIndex = 10
 SortFrame.Parent = SortButton
@@ -567,7 +569,7 @@ MadeByLabel.Text = "made by star"
 MadeByLabel.Font = Enum.Font.Gotham
 MadeByLabel.TextSize = 14
 MadeByLabel.BackgroundTransparency = 1
-MadeByLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+MadeByLabel.TextColor3 = Color3.fromRGB(70, 70, 70)
 MadeByLabel.BorderSizePixel = 0
 MadeByLabel.Size = UDim2.new(0, 200, 0, 20)
 MadeByLabel.Position = UDim2.new(0, 10, 1, -25)
@@ -592,7 +594,7 @@ end
 local function createsort(order, text, sort)
 	local bt = Instance.new("TextButton")
 	bt.Size = UDim2.new(1, -10, 0, 35)
-	bt.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+	bt.BackgroundColor3 = Color3.fromRGB(20, 20, 22)
 	bt.LayoutOrder = order
 	bt.TextColor3 = Color3.new(1, 1, 1)
 	bt.Text = text
@@ -606,11 +608,11 @@ local function createsort(order, text, sort)
 	corner.Parent = bt
 
 	bt.MouseEnter:Connect(function()
-		bt.BackgroundColor3 = Color3.fromRGB(80, 85, 90)
+		bt.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
 	end)
 
 	bt.MouseLeave:Connect(function()
-		bt.BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+		bt.BackgroundColor3 = Color3.fromRGB(20, 20, 22)
 	end)
 
 	bt.MouseButton1Click:Connect(function()
@@ -660,13 +662,13 @@ end)
 local function addButtonHover(button)
 	button.MouseEnter:Connect(function()
 		TweenService:Create(button, TweenInfo.new(0.1), {
-			BackgroundColor3 = Color3.fromRGB(80, 85, 90)
+			BackgroundColor3 = Color3.fromRGB(35, 35, 40)
 		}):Play()
 	end)
 
 	button.MouseLeave:Connect(function()
 		TweenService:Create(button, TweenInfo.new(0.1), {
-			BackgroundColor3 = Color3.fromRGB(60, 65, 70)
+			BackgroundColor3 = Color3.fromRGB(20, 20, 22)
 		}):Play()
 	end)
 end
@@ -772,8 +774,8 @@ local function CharacterAdded(Character)
 	random.LayoutOrder = 0
 	random.TextColor3 = Color3.new(1, 1, 1)
 	random.BorderSizePixel = 0
-	random.BackgroundColor3 = Color3.fromRGB(100, 120, 100)
-	random.BackgroundTransparency = 0.4
+	random.BackgroundColor3 = Color3.fromRGB(18, 18, 20)
+	random.BackgroundTransparency = 1
 	random.Font = Enum.Font.GothamBold
 	random.TextSize = 16
 	random.Text = "Random"
@@ -790,11 +792,11 @@ local function CharacterAdded(Character)
 
 	random.MouseEnter:Connect(function()
 		EmoteName.Text = "Random Emote"
-		random.BackgroundTransparency = 0.2
+		random.BackgroundTransparency = 0.6
 	end)
 
 	random.MouseLeave:Connect(function()
-		random.BackgroundTransparency = 0.4
+		random.BackgroundTransparency = 1
 	end)
 
 	random.Parent = Frame
@@ -811,8 +813,8 @@ local function CharacterAdded(Character)
 		EmoteButton:SetAttribute("name", Emote.name)
 		EmoteButton.Size = UDim2.new(0, 87, 0, 80)
 		EmoteButton.Image = Emote.icon
-		EmoteButton.BackgroundColor3 = Color3.fromRGB(55, 60, 65)
-		EmoteButton.BackgroundTransparency = 0.4
+		EmoteButton.BackgroundColor3 = Color3.fromRGB(15, 15, 18)
+		EmoteButton.BackgroundTransparency = 1
 		EmoteButton.BorderSizePixel = 0
 
 		local emoteCorner = Instance.new("UICorner")
@@ -858,11 +860,11 @@ local function CharacterAdded(Character)
 
 		EmoteButton.MouseEnter:Connect(function()
 			EmoteName.Text = Emote.name
-			EmoteButton.BackgroundTransparency = 0.2
+			EmoteButton.BackgroundTransparency = 0.6
 		end)
 
 		EmoteButton.MouseLeave:Connect(function()
-			EmoteButton.BackgroundTransparency = 0.4
+			EmoteButton.BackgroundTransparency = 1
 		end)
 
 		Favorite.MouseButton1Click:Connect(function()
