@@ -563,18 +563,6 @@ SortPadding.PaddingLeft = UDim.new(0, 5)
 SortPadding.PaddingRight = UDim.new(0, 5)
 SortPadding.Parent = SortFrame
 
--- Bottom credit label
-local MadeByLabel = Instance.new("TextLabel")
-MadeByLabel.Text = "made by star"
-MadeByLabel.Font = Enum.Font.Gotham
-MadeByLabel.TextSize = 14
-MadeByLabel.BackgroundTransparency = 1
-MadeByLabel.TextColor3 = Color3.fromRGB(70, 70, 70)
-MadeByLabel.BorderSizePixel = 0
-MadeByLabel.Size = UDim2.new(0, 200, 0, 20)
-MadeByLabel.Position = UDim2.new(0, 10, 1, -25)
-MadeByLabel.TextXAlignment = Enum.TextXAlignment.Left
-MadeByLabel.Parent = BackFrame
 
 -- Functions
 local function SortEmotes()
