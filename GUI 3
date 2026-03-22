@@ -846,8 +846,8 @@ local function CharacterAdded(Character)
 		local Favorite = Instance.new("ImageButton")
 		Favorite.Name = "favorite"
 		Favorite.Image = IsFavorited and FavoriteOn or FavoriteOff
-		Favorite.Size = UDim2.new(0, 20, 0, 20)
-		Favorite.Position = UDim2.new(1, -23, 1, -23)
+		Favorite.Size = UDim2.new(0, 8, 0, 8)
+		Favorite.Position = UDim2.new(1, -15, 1, -15)
 		Favorite.BorderSizePixel = 0
 		Favorite.BackgroundTransparency = 1
 		Favorite.ZIndex = 2
