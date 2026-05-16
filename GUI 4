@@ -22,7 +22,11 @@ local FavoritedEmotes = {}
 -- Table of Emotes
 local Emotes = {
 
-	{ name = "Around Town", id = 3576747102, icon = "rbxthumb://type=Asset&id=3576747102&w=150&h=150", price = 1000, lastupdated = 1663264200, sort = {} },	
+	{ name = "Around Town", id = 3576747102, icon = "rbxthumb://type=Asset&id=3576747102&w=150&h=150", price = 1000, lastupdated = 1663264200, sort = {} },
+	{ name = "arm wave", id = 102773885002659, icon = "rbxthumb://type=Asset&id=102773885002659&w=150&h=150", price = 0, lastupdated = 1663264200, sort = {} },
+	{ name = "Blow-Kiss", id = 113655970575102, icon = "rbxthumb://type=Asset&id=113655970575102&w=150&h=150", price = 0, lastupdated = 1663264200, sort = {} },
+	{ name = "Falling-apart", id = 138768535525292, icon = "rbxthumb://type=Asset&id=138768535525292&w=150&h=150", price = 0, lastupdated = 1663264200, sort = {} },
+	{ name = "Shattered", id = 124305244640379, icon = "rbxthumb://type=Asset&id=124305244640379&w=150&h=150", price = 0, lastupdated = 1663264200, sort = {} },
 {
 
     name = "TWICE TAKEDOWN DANCE 2",
@@ -993,6 +997,18 @@ end)
 Corner:Clone().Parent = SearchBar
 SearchBar.Parent = BackFrame
 
+local MadeByLabel = Instance.new("TextLabel")
+MadeByLabel.Text = "KAZU ON TOP"
+MadeByLabel.TextScaled = true
+MadeByLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MadeByLabel.BackgroundTransparency = 0.3
+MadeByLabel.TextColor3 = Color3.new(1, 1, 1)
+MadeByLabel.BorderSizePixel = 0
+MadeByLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+MadeByLabel.Position = UDim2.new(1, 0, 1, 0)
+MadeByLabel.Size = UDim2.new(0.25, 0, 0.06, 0)
+Corner:Clone().Parent = MadeByLabel
+MadeByLabel.Parent = BackFrame
 
 local function openemotes(_, state)
     if state == Enum.UserInputState.Begin then
@@ -1399,11 +1415,6 @@ LocalPlayer.CharacterAdded:Connect(CharacterAdded)
 
 
 wait(1)
-
-
--- Akali Notif
-local AkaliNotif = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/Dynissimo/main/Scripts/AkaliNotif.lua"))();
-local Notify = AkaliNotif.Notify;
 
 
 -- Wait before showing the main GUI
