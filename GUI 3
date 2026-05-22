@@ -399,8 +399,6 @@ local Emotes = {
 }
 
 local CurrentSort = "customorder"
-local AutoCloseEnabled = false
-local HideUnfavsEnabled = true
 
 -- Create ScreenGui with improved styling
 local ScreenGui = Instance.new("ScreenGui")
@@ -483,49 +481,6 @@ SearchPadding.PaddingLeft = UDim.new(0, 10)
 SearchPadding.PaddingRight = UDim.new(0, 10)
 SearchPadding.Parent = SearchBar
 
-
--- Toggle dot container (stacked vertically, after Close button)
-local ToggleContainer = Instance.new("Frame")
-ToggleContainer.Size = UDim2.new(0, 14, 0, 32)
-ToggleContainer.Position = UDim2.new(1, -38, 0.5, 0)
-ToggleContainer.AnchorPoint = Vector2.new(0, 0.5)
-ToggleContainer.BackgroundTransparency = 1
-ToggleContainer.BorderSizePixel = 0
-ToggleContainer.Parent = TopBar
-
-local ToggleList = Instance.new("UIListLayout")
-ToggleList.FillDirection = Enum.FillDirection.Vertical
-ToggleList.HorizontalAlignment = Enum.HorizontalAlignment.Center
-ToggleList.VerticalAlignment = Enum.VerticalAlignment.Center
-ToggleList.Padding = UDim.new(0, 4)
-ToggleList.Parent = ToggleContainer
-
--- Auto-Close dot toggle
-local AutoCloseButton = Instance.new("TextButton")
-AutoCloseButton.Size = UDim2.new(0, 14, 0, 14)
-AutoCloseButton.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
-AutoCloseButton.BackgroundTransparency = 0
-AutoCloseButton.BorderSizePixel = 0
-AutoCloseButton.Text = ""
-AutoCloseButton.Parent = ToggleContainer
-
-local AutoCloseCorner = Instance.new("UICorner")
-AutoCloseCorner.CornerRadius = UDim.new(1, 0)
-AutoCloseCorner.Parent = AutoCloseButton
-
--- Favs dot toggle
-local HideUnfavsButton = Instance.new("TextButton")
-HideUnfavsButton.Size = UDim2.new(0, 14, 0, 14)
-HideUnfavsButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-HideUnfavsButton.BackgroundTransparency = 0
-HideUnfavsButton.BorderSizePixel = 0
-HideUnfavsButton.Text = ""
-HideUnfavsButton.Parent = ToggleContainer
-
-local HideUnfavsCorner = Instance.new("UICorner")
-HideUnfavsCorner.CornerRadius = UDim.new(1, 0)
-HideUnfavsCorner.Parent = HideUnfavsButton
-
 -- Sort Button
 local SortButton = Instance.new("TextButton")
 SortButton.Size = UDim2.new(0, 80, 0, 35)
@@ -546,7 +501,7 @@ SortCorner.Parent = SortButton
 -- Close Button
 local CloseButton = Instance.new("TextButton")
 CloseButton.Size = UDim2.new(0, 80, 0, 35)
-CloseButton.Position = UDim2.new(1, -135, 0.5, 0)
+CloseButton.Position = UDim2.new(1, -165, 0.5, 0)
 CloseButton.AnchorPoint = Vector2.new(0, 0.5)
 CloseButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
 CloseButton.BorderSizePixel = 0
@@ -560,6 +515,49 @@ local CloseCorner = Instance.new("UICorner")
 CloseCorner.CornerRadius = UDim.new(0, 6)
 CloseCorner.Parent = CloseButton
 
+-- Hide Favorites Toggle Dot (default ON = stars hidden), placed after Close
+local HideFavoritesEnabled = true
+
+local FavToggle = Instance.new("TextButton")
+FavToggle.Size = UDim2.new(0, 12, 0, 12)
+FavToggle.Position = UDim2.new(1, -50, 0.5, 0)
+FavToggle.AnchorPoint = Vector2.new(0.5, 0.5)
+FavToggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- white = stars hidden (ON)
+FavToggle.BorderSizePixel = 0
+FavToggle.Text = ""
+FavToggle.ZIndex = 5
+FavToggle.Parent = TopBar
+
+local FavToggleCorner = Instance.new("UICorner")
+FavToggleCorner.CornerRadius = UDim.new(0.5, 0)
+FavToggleCorner.Parent = FavToggle
+
+local FavToggleTooltip = Instance.new("TextLabel")
+FavToggleTooltip.Size = UDim2.new(0, 110, 0, 26)
+FavToggleTooltip.Position = UDim2.new(0.5, 0, 1, 6)
+FavToggleTooltip.AnchorPoint = Vector2.new(0.5, 0)
+FavToggleTooltip.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+FavToggleTooltip.BorderSizePixel = 0
+FavToggleTooltip.Text = "Stars hidden"
+FavToggleTooltip.Font = Enum.Font.Gotham
+FavToggleTooltip.TextSize = 12
+FavToggleTooltip.TextColor3 = Color3.new(1, 1, 1)
+FavToggleTooltip.BackgroundTransparency = 0.1
+FavToggleTooltip.Visible = false
+FavToggleTooltip.ZIndex = 20
+FavToggleTooltip.Parent = FavToggle
+
+local FavTooltipCorner = Instance.new("UICorner")
+FavTooltipCorner.CornerRadius = UDim.new(0, 4)
+FavTooltipCorner.Parent = FavToggleTooltip
+
+FavToggle.MouseEnter:Connect(function()
+	FavToggleTooltip.Visible = true
+end)
+FavToggle.MouseLeave:Connect(function()
+	FavToggleTooltip.Visible = false
+end)
+
 -- Scrolling frame for emotes
 local Frame = Instance.new("ScrollingFrame")
 Frame.Size = UDim2.new(1, -20, 1, -80)
@@ -569,10 +567,50 @@ Frame.AutomaticCanvasSize = Enum.AutomaticSize.Y
 Frame.ScrollingDirection = Enum.ScrollingDirection.Y
 Frame.BackgroundTransparency = 1
 Frame.ScrollBarThickness = 6
-Frame.ScrollingSpeed = 90
 Frame.ScrollBarImageColor3 = Color3.fromRGB(40, 40, 45)
 Frame.BorderSizePixel = 0
 Frame.Parent = BackFrame
+
+-- Fast scroll (default ScrollingSpeed is too slow)
+UserInputService.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseWheel then
+		if Frame.Visible then
+			local mouse = LocalPlayer:GetMouse()
+			local guiObjects = LocalPlayer.PlayerGui:GetGuiObjectsAtPosition(mouse.X, mouse.Y)
+			for _, obj in ipairs(guiObjects) do
+				if obj == Frame or obj:IsDescendantOf(Frame) then
+					local newPos = Frame.CanvasPosition.Y - (input.Position.Z * 300)
+					Frame.CanvasPosition = Vector2.new(0, math.clamp(newPos, 0, Frame.AbsoluteCanvasSize.Y - Frame.AbsoluteSize.Y))
+					break
+				end
+			end
+		end
+	end
+end)
+
+local function applyFavoritesVisibility()
+	for _, btn in pairs(Frame:GetChildren()) do
+		if btn:IsA("GuiButton") then
+			local fav = btn:FindFirstChild("favorite")
+			if fav then
+				fav.Visible = not HideFavoritesEnabled
+				fav.Active = not HideFavoritesEnabled
+			end
+		end
+	end
+end
+
+FavToggle.MouseButton1Click:Connect(function()
+	HideFavoritesEnabled = not HideFavoritesEnabled
+	if HideFavoritesEnabled then
+		FavToggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		FavToggleTooltip.Text = "Stars hidden"
+	else
+		FavToggle.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+		FavToggleTooltip.Text = "Stars visible"
+	end
+	applyFavoritesVisibility()
+end)
 
 -- Grid layout - 13 columns, 10 rows
 local Grid = Instance.new("UIGridLayout")
@@ -717,65 +755,6 @@ end)
 CloseButton.MouseLeave:Connect(function()
 	CloseButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
 end)
--- Auto-Close toggle logic
-AutoCloseButton.MouseButton1Click:Connect(function()
-	AutoCloseEnabled = not AutoCloseEnabled
-	if AutoCloseEnabled then
-		AutoCloseButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-		AutoCloseButton.BackgroundTransparency = 0
-	else
-		AutoCloseButton.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
-		AutoCloseButton.BackgroundTransparency = 0
-	end
-end)
-
-AutoCloseButton.MouseEnter:Connect(function()
-	if not AutoCloseEnabled then
-		TweenService:Create(AutoCloseButton, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(90, 90, 90) }):Play()
-	end
-end)
-AutoCloseButton.MouseLeave:Connect(function()
-	if not AutoCloseEnabled then
-		TweenService:Create(AutoCloseButton, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(55, 55, 55) }):Play()
-	end
-end)
-
--- Favs toggle: hide/show stars
-local function applyHideUnfavsFilter()
-	for _, btn in pairs(Frame:GetChildren()) do
-		if btn:IsA("GuiButton") then
-			local star = btn:FindFirstChild("favorite")
-			if star then
-				star.Visible = not HideUnfavsEnabled
-			end
-		end
-	end
-end
-
-HideUnfavsButton.MouseButton1Click:Connect(function()
-	HideUnfavsEnabled = not HideUnfavsEnabled
-	if HideUnfavsEnabled then
-		HideUnfavsButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-		HideUnfavsButton.BackgroundTransparency = 0
-	else
-		HideUnfavsButton.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
-		HideUnfavsButton.BackgroundTransparency = 0
-	end
-	applyHideUnfavsFilter()
-end)
-
-HideUnfavsButton.MouseEnter:Connect(function()
-	if not HideUnfavsEnabled then
-		TweenService:Create(HideUnfavsButton, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(90, 90, 90) }):Play()
-	end
-end)
-HideUnfavsButton.MouseLeave:Connect(function()
-	if not HideUnfavsEnabled then
-		TweenService:Create(HideUnfavsButton, TweenInfo.new(0.1), { BackgroundColor3 = Color3.fromRGB(55, 55, 55) }):Play()
-	end
-end)
-
-
 
 -- Rest of your existing functions (PlayEmote, WaitForChildOfClass, etc.)
 local function SendNotification(title, text)
@@ -806,10 +785,6 @@ local function PlayEmote(name, id)
 		if not succ then
 			Description:AddEmote(name, id)
 			HumanoidPlayEmote(Humanoid, name, id)
-		end
-		-- Auto-close
-		if AutoCloseEnabled then
-			ScreenGui.Enabled = false
 		end
 	else
 		SendNotification("R6 Not Supported", "Please use R15 to play emotes")
@@ -980,7 +955,7 @@ local function CharacterAdded(Character)
 
 		EmoteButton.Parent = Frame
 	end
-	applyHideUnfavsFilter()
+	applyFavoritesVisibility()
 end
 
 if LocalPlayer.Character then
@@ -1002,44 +977,14 @@ else
 end
 
 -- Input handling
-local inputconnect
 ScreenGui:GetPropertyChangedSignal("Enabled"):Connect(function()
 	if ScreenGui.Enabled then
 		EmoteName.Text = "Select an Emote"
 		SearchBar.Text = ""
 		SortFrame.Visible = false
 		GuiService:SetEmotesMenuOpen(false)
-		inputconnect = UserInputService.InputBegan:Connect(function(input, processed)
-			if not processed and input.UserInputType == Enum.UserInputType.MouseButton1 then
-				local mouse = LocalPlayer:GetMouse()
-				local guiObjects = LocalPlayer.PlayerGui:GetGuiObjectsAtPosition(mouse.X, mouse.Y)
-				local clickedInGui = false
-				for _, obj in ipairs(guiObjects) do
-					if obj:IsDescendantOf(ScreenGui) then
-						clickedInGui = true
-						break
-					end
-				end
-				if not clickedInGui and not AutoCloseEnabled then
-					ScreenGui.Enabled = false
-				end
-			end
-		end)
-	else
-		if inputconnect then inputconnect:Disconnect() end
+		applyFavoritesVisibility()
 	end
-end)
-
-if not IsStudio then
-	GuiService.EmotesMenuOpenChanged:Connect(function(isopen)
-		if isopen then
-			ScreenGui.Enabled = false
-		end
-	end)
-end
-
-GuiService.MenuOpened:Connect(function()
-	ScreenGui.Enabled = false
 end)
 
 -- Parent ScreenGui
@@ -1058,5 +1003,3 @@ else
 		ScreenGui.Parent = CoreGui
 	end
 end
-
-print("Improved Emote Wheel loaded! Press ',' (comma) to open.")
